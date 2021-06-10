@@ -1,5 +1,5 @@
 import csv
-from datetime import date, datetime
+from datetime import datetime
 from pathlib import Path
 
 import dl_csv_fn

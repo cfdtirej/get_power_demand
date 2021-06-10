@@ -1,10 +1,8 @@
 import csv
 import datetime
 from datetime import datetime, timedelta
-from os import write
 from pathlib import Path
 from typing import Any, List, Dict, Iterator
-from pandas.io.pytables import Term
 import requests
 
 
