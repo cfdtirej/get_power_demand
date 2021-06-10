@@ -21,17 +21,18 @@ def datetime_string_range(start_ymd: str = '20180101', end_ymd: str = '20210101'
         yield dt
 
 
-def hokuriku_pd_csv_dl(ymd: datetime) -> None:
+def hokuriku_pd_csv_dl(_date: datetime) -> None:
     """北陸のエリア需要csvをダウンロード
-    :param ymd: 日付(YYMMDD),datetime_string_range()の返り値
+    :param ymd: 日付(Y-M-D)datetime_string_range()の返り値
     """
+    ymd = _date.strftime('%Y%m%d')
     url = f'http://www.rikuden.co.jp/nw/denki-yoho/csv/juyo_05_{ymd}.csv'
     res = requests.get(url)
     table: List[List[str]] = [[t for t in txt.split(',')] for txt in res.text.splitlines()]
-    dl_dir: Path = Path(__file__).parent / 'data' / 'Hokuriku' / f'{ymd.year}' / f'{ymd.month}'
+    dl_dir: Path = Path(__file__).parent / 'data' / 'Hokuriku' / f'{_date.year}' / f'{_date.month}'
     if not dl_dir.is_dir():
         dl_dir.mkdir(parents=True)
-    csvfile: Path = dl_dir / f'{ymd}.csv'
+    csvfile: Path = dl_dir / f'{_date}.csv'
     if not csvfile.exists():
         csvfile.touch()
     with open(csvfile, 'w') as f:
@@ -40,5 +41,5 @@ def hokuriku_pd_csv_dl(ymd: datetime) -> None:
     
 
 if __name__ == '__main__':
-    for d in datetime_string_range():
-        print(d.month)
+    for d in datetime_string_range('20180101','20210101'):
+        print(d)
